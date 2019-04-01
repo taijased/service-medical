@@ -1,15 +1,15 @@
 <template lang="pug">
     .auth
-        img(src="../assets/logo.svg")
+        img(src="../assets/logo-registration.svg")
         .form
-            .form__title Вход в систему
+            .form__title Регистрация
             form
                 .error(v-if='getError') Не верный логин или пароль
-                input(v-model='email', type='email', placeholder="Логин")
-                input(v-model='password', type='password', placeholder="Пароль")
+                input(v-model='email', type='email', placeholder="Username")
+                input(v-model='password', type='password', placeholder="Password")
+                input(v-model='checkPass', type='password', placeholder="Reapet password")
                 .controls
-                    router-link(to="/registration") Регистрация
-                    .btn-primary.press(@click='toLogin') Войти
+                    .btn-primary.press(@click='toRegistration') Зарегистрироваться
 
 </template>
 
@@ -20,7 +20,8 @@ export default {
     data () {
         return {
             email: 'taijased@gmail.ru',
-            password: 'taijased'
+            password: 'taijased',
+            checkPass: ''
         }
     },
     computed: {
@@ -32,12 +33,13 @@ export default {
         ...mapActions({
             signin: "auth/signin"
         }),
-        toLogin () {
+        toRegistration () {
             const payload = {
                 email: this.email,
                 password: this.password
             };
-            this.signin(payload)
+            console.log(payload);
+            // this.signin(payload)
         }
     }
 }
@@ -61,7 +63,7 @@ $border-radius = 3px
     background: #E6F1F3;
     .form
         width 441px
-        height 368px
+        // height 368px
         display flex
         flex-direction column
         justify-content center
@@ -69,6 +71,7 @@ $border-radius = 3px
         margin-left 120px
         background: #D0E8EA;
         border-radius: 31px;
+        padding 31px 0
         &__title
             font-family 'RobotoRegular'
             font-style: normal;

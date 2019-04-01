@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition name="page" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -16,6 +18,14 @@ body
   color #2c3e50
   width 100vw
   height 100vh
+  background: #E6F1F3;
+  overflow hidden
 
-
+.page-enter-active, .page-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+  transform: translateX(-30%);
+}
 </style>

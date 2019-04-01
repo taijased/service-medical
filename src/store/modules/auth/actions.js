@@ -23,8 +23,6 @@ export async function signin ({commit, dispatch}, payload) {
           // await commit('LOGIN_SUCCESS', response)
           await commit('LOGIN_SUCCESS', {token: "zaebis-token"})
           dispatch('setUser')
-          commit('SET_LOGIN', payload.email)
-          commit('SET_PASSWORD', payload.password)
     //       resolve(response);
     //     })
     //     .catch(error => {
@@ -35,7 +33,7 @@ export async function signin ({commit, dispatch}, payload) {
     //       reject(error)
     //     });
     // })
-    console.log(payload);
+    // console.log(payload);
     Router.push('/main')
   } catch (error) {
       console.log('signin: ' + error)
@@ -62,14 +60,7 @@ export function setUser ({commit}) {
     //     this.$router.push('/main')
     //   }
     // })
-    commit('SET_AUTH_USER', {name: "ivan", age: "14"})
-}
-
-export function setLogin ({commit}, payload) {
-  commit('SET_LOGIN', payload)
-}
-export function setPassword ({commit}, payload) {
-  commit('SET_PASSWORD', payload)
+    commit('SET_AUTH_USER', {name: "Oleg Petrov", age: "22"})
 }
 
 

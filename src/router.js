@@ -4,7 +4,8 @@ import AuthService from './services/AuthService';
 
 
 const Auth = () => import('./views/Auth.vue')
-const Home = () => import('./views/Home.vue')
+const Main = () => import('./views/Main.vue')
+const Registration = () => import('./views/Registration.vue')
 
 
 Vue.use(Router)
@@ -18,9 +19,13 @@ export default new Router({
       component: Auth
     },
     {
-      path: '/home',
-      component: Home,
-      beforeEnter: AuthService.requireAuth,
+      path: '/main',
+      component: Main,
+      // beforeEnter: AuthService.requireAuth
+    },
+    {
+      path: '/registration',
+      component: Registration,
     }
   ]
 })

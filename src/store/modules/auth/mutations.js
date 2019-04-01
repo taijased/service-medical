@@ -33,20 +33,5 @@ export const LOGIN_SUCCESS = (state, data) => {
     }
 }
 
-export const SET_LOGIN = (state, login) => {
-    try {
-        localStorage.setItem('isLogin', login)
-    } catch (error) {
-        console.log('SET_LOGIN_AND_PASSWORD: ' + error)
-    }
-}
-export const SET_PASSWORD = (state, password) => {
-    try {
-        localStorage.setItem('isPassword', password)
-    } catch (error) {
-        console.log('SET_PASSWORD: ' + error)
-    }
-}
-
 export const SET_ERROR = (state, error) => state.error = error
 
