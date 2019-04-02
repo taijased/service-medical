@@ -7,7 +7,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './style/font.css'
 
-Vue.use(ElementUI);
+
+import locale from 'element-ui/lib/locale/lang/ru-RU'
+Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 

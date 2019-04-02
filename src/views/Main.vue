@@ -6,10 +6,14 @@
         .doctor-info
           .doctor-name Мария
           .doctor-family Спиридонова
-        
+      router-link(to="/addsick")
+        .add-sick
+          img(src="../assets/note.svg")
+          .add-sick-title Добавить пациента
     .sicks
       el-row
-        h1 Пациенты
+        h1 Научная больница Инженернерного нститута
+        h3 Пациенты
       el-row
         el-col(
           :xs='24', 
@@ -53,23 +57,80 @@ export default {
   align-items center
   background: #E6F1F3;
   .doctor 
-    width 30%
+    width 45%
     height 100%
     background: #D0E8EA;
-    .doctor-card
+    display flex
+    flex-direction column
+    justify-content space-between
+    align-items center
+    a 
+      color inherit
+      text-decoration none
+    .add-sick
       display flex
       flex-direction row
       justify-content center
       align-items center
       background #35B4B7
       border-radius: 29px;
-      margin 20px 10px
+      width: 300px;
+      height 100px
+      margin-bottom 30px
+      transform scale(1)
+      user-select none
+      transition transform .25s
+
+      &:hover
+        cursor pointer
+
+      &:active 
+        transform scale(0.9)
+        transition transform .25s
+      img
+        width 40px
+      .add-sick-title
+        font-family 'RobotoMedium'
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: normal;
+        color: white;
+        margin-left 20px
+      
+      
+    .doctor-card
+      margin-top 30px
+      display flex
+      flex-direction row
+      justify-content center
+      align-items center
+      background #35B4B7
+      border-radius: 29px;
+      width: 300px;
+      height: 200px;
+      img
+        width 30%
       .doctor-info
         display flex
         flex-direction column
         justify-content flex-start
         align-items center
-        
+        font-family 'RobotoBold'
+        font-style: normal;
+        font-weight: bold;
+        font-size: 26px;
+        line-height: normal;
+        color: white;
+        margin-left 20px
+        .doctor-name 
+          width 100%
+          text-align left
+        .doctor-family
+          width 100%
+          text-align left
+
+          
   .sicks
     // width 70%
     height 100%
@@ -82,6 +143,16 @@ export default {
       line-height: normal;
       color: #27597A;
       text-align left
+      margin-left 10px
+    h3 
+      font-family 'RobotoRegular'
+      font-style: normal;
+      font-size: 28px;
+      line-height: normal;
+      color: rgba(0,0,0,0.7);
+      text-align left
+      margin-left 10px
+
     .sick-card
       width 200px
       height 190px

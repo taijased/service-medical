@@ -6,6 +6,7 @@ import AuthService from './services/AuthService';
 const Auth = () => import('./views/Auth.vue')
 const Main = () => import('./views/Main.vue')
 const Registration = () => import('./views/Registration.vue')
+const AddSick = () => import('./views/AddSick.vue')
 
 
 Vue.use(Router)
@@ -26,6 +27,11 @@ export default new Router({
     {
       path: '/registration',
       component: Registration,
+    },
+    {
+      path: '/addSick',
+      component: AddSick,
+      // beforeEnter: AuthService.requireAuth
     }
   ]
 })
