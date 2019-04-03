@@ -1,6 +1,7 @@
 import Router from '../../../router';
 import AuthService from '../../../services/AuthService';
 import SickService from '../../../services/SickService';
+import moment from 'moment'
 
 export function fetchListSick ({commit}) {
   try {
@@ -37,12 +38,12 @@ export function updateSick ({commit, state}, payload) {
         "last_name": payload.secondName,
         "first_name": payload.firstName,
         "second_name": payload.thridName,
-        "birth_date": payload.dateBorn.split(" ")[0],
+        "birth_date": moment(payload.dateBorn).format('YYYY-MM-DD'),
         "gender": payload.gender,
         "diagnosis": payload.diagnosis,
         "comments": payload.comments
       }
-      console.log(payload.dateBorn.split(" ")[0]);
+
       new Promise((resolve, reject) => {
         SickService.updateSick(state.sick.id, data)
           .then(response => {
@@ -68,11 +69,37 @@ export function deleteSick ({commit}, payload) {
 }
 
 export function createSick ({commit, dispatch}, payload) {
-  commit('ADD_SICK', payload)
-  setTimeout(() => {
-    dispatch('setSickStatus', false)
-    Router.push("/main")
-  }, 1000);
+  try {
+    if (AuthService.isAuthorize()) {
+      const data = {
+        "last_name": payload.secondName,
+        "first_name": payload.firstName,
+        "second_name": payload.thridName,
+        "birth_date": moment(payload.dateBorn).format('YYYY-MM-DD'),
+        "gender": payload.gender,
+        "diagnosis": payload.diagnosis,
+        "comments": payload.comments
+      }
+
+      new Promise((resolve, reject) => {
+        SickService.createSick(data)
+          .then(response => {
+            console.log(response);
+            setTimeout(() => {
+              dispatch('setSickStatus', false)
+              Router.push("/main")
+            }, 1000);
+            resolve(response)
+          })
+          .catch(error => {
+            Router.push("/main")
+            reject(error)
+          })
+      })
+    }
+  } catch (error) {
+    console.log('createSick: ' + error)
+  }
 }
 
 export function setSickStatus ({commit}, payload) {

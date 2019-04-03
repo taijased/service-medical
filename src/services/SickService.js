@@ -18,8 +18,13 @@ const SickService = {
         }
         return ApiAdmin.put('/patient/' + id, data, headers)
     },
-    createSick() {
-        return ApiAdmin.post('/patient')
+    createSick(data) {
+        const headers = {
+            headers: {
+                auth_token: localStorage.getItem('token')
+            }
+        }
+        return ApiAdmin.post('/patient', data, headers)
     },
 }
   

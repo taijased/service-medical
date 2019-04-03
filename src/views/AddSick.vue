@@ -14,7 +14,7 @@
                             .label Фамилия
                 el-row(:gutter="20")
                     el-col(:span="12")
-                        el-form-item(prop="thridName", :class="{'not-empty': ruleForm.thridName !== ''}")
+                        el-form-item(:class="{'not-empty': ruleForm.thridName !== ''}")
                             el-input(v-model='ruleForm.thridName', autocomplete="off")
                             .label Отчество
                     el-col(:span="5")
@@ -36,7 +36,7 @@
                             .label День рождения
                 el-row(:gutter="20")
                     el-col(:span="12")
-                        el-form-item(prop="message", :class="{'not-empty': ruleForm.message !== ''}")
+                        el-form-item(:class="{'not-empty': ruleForm.message !== ''}")
                             el-input(type="textarea", v-model="ruleForm.message", maxlength="160")
                             .label Комментарий  
             .controls
@@ -74,43 +74,7 @@ export default {
             }
         }
         };
-        var validateThridName = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
-        } else {
-            if (value !== "" && value.length < 20) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинное Отчество"));
-            }
-        }
-        };
-        
-        var validateMessage = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
-        } else {
-            if (value !== "" && value.length < 160) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинный Комментарий"));
-            }
-        }
-        };
-        var validateDiagnosis = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
-        } else {
-            if (value !== "" && value.length < 160) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинный Диагноз"));
-            }
-        }
-        };
+      
         var validateDate= (rule, value, callback) => {
         if (value === null) {
             callback(new Error("Обязательное поле"));
@@ -120,25 +84,22 @@ export default {
         }
         };
         return {
-        dialogFormVisible: true,
-        disabledBtn: false,
-        ruleForm: {
-            firstName: "Спиридонов",
-            secondName: "Максим",
-            thridName: "Владимировч",
-            message: "Радостный",
-            gender: true,
-            diagnosis: "Кажется больным",
-            dateBorn: null,
-        },
-        rules: {
-            firstName: [{ validator: validateFirstName, trigger: "blur" }],
-            secondName: [{ validator: validateSecondName, trigger: "blur" }],
-            thridName: [{ validator: validateThridName, trigger: "blur" }],
-            message: [{ validator: validateMessage, trigger: "blur" }],
-            diagnosis: [{ validator: validateDiagnosis, trigger: "blur" }],
-            dateBorn: [{ validator: validateDate, trigger: "blur" }],
-        }
+            dialogFormVisible: true,
+            disabledBtn: false,
+            ruleForm: {
+                firstName: "Спиридонов",
+                secondName: "Максим",
+                thridName: "Владимировч",
+                message: "Радостный",
+                gender: true,
+                diagnosis: "Кажется больным",
+                dateBorn: null,
+            },
+            rules: {
+                firstName: [{ validator: validateFirstName, trigger: "blur" }],
+                secondName: [{ validator: validateSecondName, trigger: "blur" }],
+                dateBorn: [{ validator: validateDate, trigger: "blur" }],
+            }
         };
     },
     computed: {
@@ -156,7 +117,6 @@ export default {
             if (valid) {
                 this.setSickStatus(true)
                 this.createSick(this.ruleForm)
-                console.log(this.ruleForm);
             } else {
             return false;
             }
