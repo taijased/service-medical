@@ -26,6 +26,14 @@ const SickService = {
         }
         return ApiAdmin.post('/patient', data, headers)
     },
+    deleteSick(id) {
+        const headers = {
+            headers: {
+                auth_token: localStorage.getItem('token')
+            }
+        }
+        return ApiAdmin.delete('/patient/' + id, headers)
+    },
 }
   
 export default SickService

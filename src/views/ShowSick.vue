@@ -50,9 +50,8 @@
 
                     
             .controls
-                router-link(to="/main") Назад
                 .btn-primary.press(@click="submitForm()") Сохранить
-                .btn-primary.btn-success.press(@click="deleteSick(ruleForm)") Выписать
+                .btn-primary.btn-success.press(@click="deleteSick()") Выписать
 
 
 </template>

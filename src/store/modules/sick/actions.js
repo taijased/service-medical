@@ -23,15 +23,7 @@ export function fetchListSick ({commit}) {
   
 }
 
-export function fetchSick ({commit}, payload) {
-  let sick = {
-    name: "Ебибиева Ольга",
-    age: 13
-  }
-  commit('UPDATE_SICK', sick)
-}
-
-export function updateSick ({commit, state}, payload) {
+export function updateSick ({state}, payload) {
   try {
     if (AuthService.isAuthorize()) {
       const data = {
@@ -62,13 +54,26 @@ export function updateSick ({commit, state}, payload) {
   }
 }
 
-export function deleteSick ({commit}, payload) {
-  // console.log('delete-' + payload.firstName);
-  Router.push("/main")
-
+export function deleteSick ({state}) {
+  try {
+    if (AuthService.isAuthorize()) {
+      new Promise((resolve, reject) => {
+        SickService.deleteSick(state.sick.id)
+          .then(response => {
+            console.log(response);
+            Router.push("/main")
+            resolve(response)
+          })
+          .catch(reject)
+      })
+    }
+  } catch (error) {
+    console.log('updateSick: ' + error)
+    Router.push("/main")
+  }
 }
 
-export function createSick ({commit, dispatch}, payload) {
+export function createSick ({dispatch}, payload) {
   try {
     if (AuthService.isAuthorize()) {
       const data = {
