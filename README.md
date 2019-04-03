@@ -31,7 +31,7 @@ yarn run build
 
 # Работа с API
 
-## Базовый URL в корне проекта в файле .env VUE_APP_API_URL="{BASE_URL}"
+## Базовый URL в корне проекта в файле .env VUE_APP_API_URL={BASE_URL}
 
 ```
 VUE_APP_API_URL=http://92.255.195.45:44001/
