@@ -1,4 +1,5 @@
 export default {
-  sicks: null,
+  sicks: [],
   sick: null,
+  sickStatus: false
 }

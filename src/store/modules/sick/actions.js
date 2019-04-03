@@ -1,36 +1,25 @@
+import Router from '../../../router';
+import AuthService from '../../../services/AuthService';
+import SickService from '../../../services/SickService';
 
 export function fetchListSick ({commit}) {
-  let data = [
-    {
-      name: "Imashev Sasha",
-      age: 23
-    },
-    {
-      name: "Petrov Oleg",
-      age: 22
-    },
-    {
-      name: "Petrov Oleg",
-      age: 22
-    },
-    {
-      name: "Ivan Ivanov",
-      age: 35
-    },
-    {
-      name: "Akulov Demon",
-      age: 15
-    },
-    {
-      name: "Imashev Sasha",
-      age: 23
-    },
-    {
-      name: "Petrov Oleg",
-      age: 22
+  try {
+    if (AuthService.isAuthorize()) {
+      new Promise((resolve, reject) => {
+        SickService.fetchListSicks()
+          .then(response => {
+            commit('UPDATE_LIST_SICK', response.data)
+            resolve(response)
+          })
+          .catch(error => {
+            Router.push("/")
+          })
+      })
     }
-  ]
-  commit('UPDATE_LIST_SICK', data)
+  } catch (error) {
+    console.log('fetchListSick: ' + error)
+  }
+  
 }
 
 export function fetchSick ({commit}, payload) {
@@ -41,16 +30,56 @@ export function fetchSick ({commit}, payload) {
   commit('UPDATE_SICK', sick)
 }
 
-export function updateSick ({commit}, payload) {
-  commit('UPDATE_SICK', sick)
+export function updateSick ({commit, state}, payload) {
+  try {
+    if (AuthService.isAuthorize()) {
+      const data = {
+        "last_name": payload.secondName,
+        "first_name": payload.firstName,
+        "second_name": payload.thridName,
+        "birth_date": payload.dateBorn.split(" ")[0],
+        "gender": payload.gender,
+        "diagnosis": payload.diagnosis,
+        "comments": payload.comments
+      }
+      console.log(payload.dateBorn.split(" ")[0]);
+      new Promise((resolve, reject) => {
+        SickService.updateSick(state.sick.id, data)
+          .then(response => {
+            console.log(response);
+            Router.push("/main")
+            resolve(response)
+          })
+          .catch(error => {
+            Router.push("/main")
+            console.log(error);
+          })
+      })
+    }
+  } catch (error) {
+    console.log('updateSick: ' + error)
+  }
 }
 
 export function deleteSick ({commit}, payload) {
+  // console.log('delete-' + payload.firstName);
+  Router.push("/main")
 
 }
 
-export function createSick ({commit}, payload) {
+export function createSick ({commit, dispatch}, payload) {
+  commit('ADD_SICK', payload)
+  setTimeout(() => {
+    dispatch('setSickStatus', false)
+    Router.push("/main")
+  }, 1000);
+}
 
+export function setSickStatus ({commit}, payload) {
+  commit('UPDATE_STATUS_ADD_SICK', payload)
+}
+export function setSick ({commit}, payload) {
+  commit('UPDATE_SICK', payload)
 }
 
 

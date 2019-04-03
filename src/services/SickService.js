@@ -1,13 +1,26 @@
+
+
 import ApiAdmin from './config/ApiAdmin';
 
 const SickService = {
     fetchListSicks() {
-        return ApiAdmin.get('/sicks')
+        return ApiAdmin.get('/patient', {
+            headers: {
+                auth_token: localStorage.getItem('token')
+            }
+        })
     },
-    fetchSick(id) {
-        return ApiAdmin.get('/sicks/' + id)
+    updateSick(id, data) {
+        const headers = {
+            headers: {
+                auth_token: localStorage.getItem('token')
+            }
+        }
+        return ApiAdmin.put('/patient/' + id, data, headers)
     },
-
+    createSick() {
+        return ApiAdmin.post('/patient')
+    },
 }
   
 export default SickService

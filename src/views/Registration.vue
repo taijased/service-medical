@@ -1,15 +1,37 @@
 <template lang="pug">
-    .auth
+    .registration
         img(src="../assets/logo-registration.svg")
         .form
-            .form__title Регистрация
-            form
-                .error(v-if='getError') Не верный логин или пароль
-                input(v-model='email', type='email', placeholder="Username")
-                input(v-model='password', type='password', placeholder="Password")
-                input(v-model='checkPass', type='password', placeholder="Reapet password")
-                .controls
-                    .btn-primary.press(@click='toRegistration') Зарегистрироваться
+            el-form(label-position='left', :model='ruleForm', :rules="rules", status-icon, ref="ruleForm", class="creator-form")
+                el-row(:gutter="20")
+                    el-col(:span="12")
+                        el-form-item(prop="firstName", :class="{'not-empty': ruleForm.firstName !== ''}")
+                            el-input(v-model='ruleForm.firstName', autocomplete="off")
+                            .label Имя
+                    el-col(:span="12")
+                        el-form-item(prop="secondName", :class="{'not-empty': ruleForm.secondName !== ''}")
+                            el-input(v-model='ruleForm.secondName', autocomplete="off")
+                            .label Фамилия
+                el-row(:gutter="20")
+                    el-col(:span="12")
+                        el-form-item(prop="thridName", :class="{'not-empty': ruleForm.thridName !== ''}")
+                            el-input(v-model='ruleForm.thridName', autocomplete="off")
+                            .label Отчество
+                el-row(:gutter="20")
+                    el-col(:span="12")
+                        el-form-item(prop="email", :class="{'not-empty': ruleForm.email !== ''}")
+                            el-input(v-model='ruleForm.email', autocomplete="off")
+                            .label E-mail               
+                    el-col(:span="12")
+                        el-form-item(:class="{'not-empty': ruleForm.password !== ''}")
+                            el-input(v-model='ruleForm.password', autocomplete="off", type="password")
+                            .label Пароль              
+               
+            .controls
+                .btn-primary.btn-success.press(@click="$router.go(-1)") Назад
+                .btn-primary.press(@click="submitForm()") Зарегестрироваться
+
+
 
 </template>
 
@@ -17,32 +39,88 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-    data () {
+    data() {
+        var validateFirstName = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("Обязательное поле"));
+            } else {
+                if (value !== "" && value.length < 20) {
+                console.log(value);
+                callback();
+                } else {
+                callback(new Error("Слишком длинное Имя"));
+                }
+            }
+        };
+        var validateSecondName = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("Обязательное поле"));
+            } else {
+                if (value !== "" && value.length < 20) {
+                console.log(value);
+                callback();
+                } else {
+                callback(new Error("Слишком длинная Фамилия"));
+                }
+            }
+            };
+        var validateThridName = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("Обязательное поле"));
+            } else {
+                if (value !== "" && value.length < 20) {
+                console.log(value);
+                callback();
+                } else {
+                callback(new Error("Слишком длинное Отчество"));
+                }
+            }
+        };
+        var validateEmail = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("Обязательное поле"));
+            } else {
+                let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                const isTrue = re.test(value);
+                if (!isTrue) {
+                callback(new Error("Введите в формате. Пример: name@mail.ru"));
+                } else {
+                callback();
+                }
+            }
+        };
         return {
-            email: 'taijased@gmail.ru',
-            password: 'taijased',
-            checkPass: ''
-        }
-    },
-    computed: {
-        ...mapGetters({
-            getError: "auth/getError"
-        }),
+            ruleForm: {
+                firstName: "Максим",
+                secondName: "Спиридонов",
+                thridName: "Владимирович",
+                email: "max@gmail.com",
+                password: "max95"
+            },
+            rules: {
+                firstName: [{ validator: validateFirstName, trigger: "blur" }],
+                secondName: [{ validator: validateSecondName, trigger: "blur" }],
+                thridName: [{ validator: validateThridName, trigger: "blur" }],
+                email: [{ validator: validateEmail, trigger: "blur" }]
+            
+            }
+        };
     },
     methods: {
         ...mapActions({
-            signin: "auth/signin"
+            registration: "auth/registration",
         }),
-        toRegistration () {
-            const payload = {
-                email: this.email,
-                password: this.password
-            };
-            console.log(payload);
-            // this.signin(payload)
+        submitForm() {
+            this.$refs.ruleForm.validate(valid => {
+                if (valid) {
+                    this.registration(this.ruleForm)
+                } else {
+                    return false;
+                }
+            });
         }
     }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -53,7 +131,10 @@ $height = 50px
 $primary = #2EB14B
 $width = 300px
 $border-radius = 3px
-.auth
+
+$time-description = .25s
+
+.registration
     width 100%
     height 100%
     display flex
@@ -61,140 +142,189 @@ $border-radius = 3px
     justify-content center
     align-items center
     background: #E6F1F3;
+    img 
+        width 400px
     .form
-        width 441px
-        // height 368px
-        display flex
-        flex-direction column
-        justify-content center
-        align-items center
-        margin-left 120px
-        background: #D0E8EA;
-        border-radius: 31px;
-        padding 31px 0
-        &__title
-            font-family 'RobotoRegular'
-            font-style: normal;
-            font-weight: normal;
-            font-size: 32px;
-            line-height: normal;
-            color: #27597A;
-            text-align left 
-        form 
-            width $width
+        width 560px
+        background: #D4E7E9;
+        margin-left 50px
+        border-radius: 29px;
+        padding 50px
+        .controls
+            width 100%
             display flex
-            flex-direction column
-            justify-content center
+            flex-direction row
+            justify-content space-around
             align-items center
-            font-family 'RobotoRegular'
-            font-style normal
-            font-weight normal
-            margin 20px 0
-            .error 
-                margin-top 8px
-                animation shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both
-                font-size 16px
-                color #E4746F
-
-            input
-                display: block;
-                height 50px
-                width 100%
-                margin 12px 0
-                padding-left 28px
-                border: none;
-                background: #FFFFFF;
-                border-radius: 15px;
-                outline:none;
+            margin-top 23px
+            a
                 font-family 'RobotoRegular'
-                font-style: normal;
-                font-weight: normal;
-                font-size: 20px;
-                line-height: normal;
-                color: rgba(0,0,0,0.25)
-            .controls
-                width 100%
+                font-style normal
+                line-height 21px
+                font-size 16px
+                color #27597A
+                transform color .2s
+                text-decoration none
+                opacity 1
+                &:hover
+                    opacity .8
+                    transform opacity .2s
+                    text-decoration underline
+
+            .btn-primary
+                width 200px
+                height 42px
                 display flex
                 flex-direction row
-                justify-content space-around
+                justify-content center
                 align-items center
-                margin-top 23px
-                a
-                    font-family 'RobotoRegular'
-                    font-style normal
-                    line-height 21px
-                    font-size 16px
-                    color #27597A
-                    transform color .2s
-                    text-decoration none
-                    opacity 1
-                    &:hover
-                        opacity .8
-                        transform opacity .2s
-                        text-decoration underline
-
-                .btn-primary
-                    width 178px
-                    height 42px
-                    display flex
-                    flex-direction row
-                    justify-content center
-                    align-items center
-                    font-family 'RobotoRegular'
-                    font-style normal
-                    line-height 21px
-                    font-size 16px
-                    color white
-                    user-select none
-                    background: #27597A;
-                    border-radius: 15px;
-                    opacity 1
+                font-family 'RobotoRegular'
+                font-style normal
+                line-height 21px
+                font-size 16px
+                color white
+                user-select none
+                background: #27597A;
+                border-radius: 15px;
+                opacity 1
+                transform opacity .2s
+                &:hover
+                    cursor pointer
+                    opacity .8
                     transform opacity .2s
-                    &:hover
-                        cursor pointer
-                        opacity .8
-                        transform opacity .2s
-                .press 
-                    transform scale(1)
+            .press 
+                transform scale(1)
+                transition transform .25s
+                user-select none
+                &:active 
+                    transform scale(0.9)
                     transition transform .25s
-                    user-select none
-                    &:active 
-                        transform scale(0.9)
-                        transition transform .25s
+            .btn-success
+                background: #5DB1B5;
 
-.form input::-webkit-input-placeholder {
-    font-family 'RobotoRegular'
-	font-style: normal;
+.el-form-item {
+    margin-bottom: 40px;
+    font-family 'RobotoMedium'
+    font-style: normal;
     font-weight: normal;
-    font-size: 20px;
-    line-height: normal;
-    color: rgba(0,0,0,0.25)
+    color: #fff;
+    textarea {
+        resize: none;
+        background: #000;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        height: 150px;
+        width: 300px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 0px;
+        color: #fff;
+        padding-top: 15px;
+        font-size: 18px;
+        &:focus,
+        &:hover {
+        border-bottom: 1px solid rgba(255, 255, 255, 1);
+        }
+    }
+    &:focus-within,
+    &:hover {
+        .label {
+        color: #1C3A5F;
+
+        font-size: 14px;
+        top: -15px;
+        left: 0;
+        transition: color $time-description, top $time-description,
+            left $time-description, font-size $time-description;
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        }
+    }
+    .label {
+        height: 15px;
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        font-family 'RobotoRegular'
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+        line-height: normal;
+        color: rgba(0,0,0,0.25)
+        transition: color $time-description, top $time-description,
+        left $time-description, font-size $time-description;
+        z-index: 2;
+        transform: translate(0, -50%);
+    }
+    &__error {
+        font-family 'RobotoRegular'
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        color: #9a0f20;
+    }
+    &__content {
+        .is-checked {
+        .el-checkbox__inner {
+            background-color: #7dbf4f;
+            border-color: #7dbf4f;
+            &:hover {
+            border-color: #7dbf4f;
+            }
+        }
+        .el-checkbox__label {
+            color: #7dbf4f;
+        }
+        }
+        .is-focus {
+        .el-checkbox__inner {
+            border-color: #7dbf4f;
+            &:hover {
+            border-color: #7dbf4f;
+            }
+        }
+        }
+    }
+    .el-checkbox__label {
+        font-family 'RobotoRegular'
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        color: #fff;
+    }
+}
+.not-empty {
+    .label {
+        color: #1C3A5F;
+
+        font-size: 14px;
+        top: -15px;
+        left: 0;
+        transition: color $time-description, top $time-description,
+        left $time-description, font-size $time-description;
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+.is-error {
+    .el-input__inner {
+        border-color: #9a0f20 !important;
+    }
+    .el-input__icon {
+        color: #9a0f20 !important;
+    }
+}
+.disabled-btn {
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.7;
 }
 
-.form input:-moz-placeholder {
-	font-family 'RobotoRegular'
-	font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: normal;
-    color: rgba(0,0,0,0.25)
-}
-
-.form input::-moz-placeholder {
-	font-family 'RobotoRegular'
-	font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: normal;
-    color: rgba(0,0,0,0.25)
-}
-
-.form input:-ms-input-placeholder {
-	font-family 'RobotoRegular'
-	font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: normal;
-    color: rgba(0,0,0,0.25)
-}
 </style>

@@ -1,36 +1,28 @@
-import AuthService from '../../../services/AuthService'
+
+const TOKEN_KEY = 'token'
 
 export const SET_AUTH_USER = (state, user) => {
     try {
         state.authUser = user
         localStorage.setItem('user', JSON.stringify(state.authUser))
-        // console.log(user)
     } catch (error) {
         console.log('SET_AUTH_USER: ' + error)
     }
 }
 export const LOGOUT = (state) => {
-    try {
-        state.token = ''
-        state.isAuthorize = false
-        state.authUser = ''
-        state.player = ''
-        AuthService.clearToken()
-        localStorage.removeItem('isAuthorize')
-    } catch (error) {
-        console.log('LOGOUT: ' + error)
-    }
+    state.token = ''
+    state.isAuthorize = false
+    state.authUser = ''
+    state.player = ''
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem('isAuthorize')
 }
 export const LOGIN_SUCCESS = (state, data) => {
-    try {
-        state.token = data.token
-        state.isAuthorize = true
-        AuthService.setToken(data.token)
-        // console.log(data.token)
-        localStorage.setItem('isAuthorize', true)
-    } catch (error) {
-        console.log('SET_AUTH_USER: ' + error)
-    }
+    state.token = data.token
+    state.isAuthorize = true
+    localStorage.setItem(TOKEN_KEY, data.token)
+    localStorage.setItem('isAuthorize', true)
+   
 }
 
 export const SET_ERROR = (state, error) => state.error = error

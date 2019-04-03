@@ -4,7 +4,7 @@
         .form
             .form__title Вход в систему
             form
-                .error(v-if='getError') Не верный логин или пароль
+                .error(:class="{'error-true': getError}") Не верный логин или пароль.
                 input(v-model='email', type='email', placeholder="Логин")
                 input(v-model='password', type='password', placeholder="Пароль")
                 .controls
@@ -19,8 +19,8 @@ import { mapActions, mapGetters } from "vuex";
 export default {
     data () {
         return {
-            email: 'taijased@gmail.ru',
-            password: 'taijased'
+            email: 'floss',
+            password: 'floss'
         }
     },
     computed: {
@@ -34,8 +34,8 @@ export default {
         }),
         toLogin () {
             const payload = {
-                email: this.email,
-                password: this.password
+                login: this.email,
+                pass: this.password
             };
             this.signin(payload)
         }
@@ -49,7 +49,7 @@ $primary = #2EB14B
 
 $height = 50px
 $primary = #2EB14B
-$width = 300px
+$width = 340px
 $border-radius = 3px
 .auth
     width 100%
@@ -88,11 +88,10 @@ $border-radius = 3px
             font-weight normal
             margin 20px 0
             .error 
-                margin-top 8px
-                animation shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both
                 font-size 16px
+                color #D0E8EA
+            .error-true
                 color #E4746F
-
             input
                 display: block;
                 height 50px
@@ -158,7 +157,6 @@ $border-radius = 3px
                     &:active 
                         transform scale(0.9)
                         transition transform .25s
-
 .form input::-webkit-input-placeholder {
     font-family 'RobotoRegular'
 	font-style: normal;

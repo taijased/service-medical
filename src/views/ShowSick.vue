@@ -1,6 +1,6 @@
 <template lang="pug">
     .add-sick
-        img(src="../assets/new.svg")
+        img(src="../assets/sick-edit.svg")
         .form
             el-form(label-position='left', :model='ruleForm', :rules="rules", status-icon, ref="ruleForm", class="creator-form")
                 el-row(:gutter="20")
@@ -14,34 +14,46 @@
                             .label Фамилия
                 el-row(:gutter="20")
                     el-col(:span="12")
-                        el-form-item(prop="thridName", :class="{'not-empty': ruleForm.thridName !== ''}")
+                        el-form-item(:class="{'not-empty': ruleForm.thridName !== ''}")
                             el-input(v-model='ruleForm.thridName', autocomplete="off")
                             .label Отчество
-                    el-col(:span="5")
-                        el-form-item(prop="gender")
-                            el-switch(
-                                v-model='ruleForm.gender', 
-                                active-color='#23395C', 
-                                inactive-color='#ff4949', 
-                                active-text='Мужской', 
-                                inactive-text='Женский')
+                    el-col(:span="12")
+                        el-form-item
+                            el-input(v-model='ruleForm.individualNumber', autocomplete="off",  type='number', :disabled="true")
                 el-row(:gutter="20")
                     el-col(:span="12")
-                        el-form-item(prop="message", :class="{'not-empty': ruleForm.diagnosis !== ''}")
-                            el-input(type="textarea", v-model="ruleForm.diagnosis", maxlength="160")
-                            .label Диагноз
+                      el-form-item(:class="{'not-empty': ruleForm.diagnosis !== ''}")
+                        el-input(type="textarea", v-model="ruleForm.diagnosis", maxlength="160")
+                        .label Диагноз
+                    el-col(:span="12")
+                      el-form-item(:class="{'not-empty': ruleForm.message !== ''}")
+                        el-input(type="textarea", v-model="ruleForm.message", maxlength="160")
+                        .label Комментарий  
+                el-row(:gutter="20").not-empty
                     el-col(:span="10")
-                        el-form-item.not-empty(prop="dateBorn")
-                            el-date-picker(v-model='ruleForm.dateBorn', type='date')
-                            .label День рождения
-                el-row(:gutter="20")
-                    el-col(:span="12")
-                        el-form-item(prop="message", :class="{'not-empty': ruleForm.message !== ''}")
-                            el-input(type="textarea", v-model="ruleForm.message", maxlength="160")
-                            .label Комментарий  
+                      el-form-item(prop="dateBorn")
+                        el-date-picker(v-model='ruleForm.dateBorn', type='date', placeholder='День рождения')
+                        .label День рождения
+                    el-col(:span="6")
+                      el-form-item(prop="gender")
+                        el-switch(
+                            v-model='ruleForm.gender', 
+                            active-color='#23395C', 
+                            inactive-color='#ff4949', 
+                            active-text='М', 
+                            inactive-text='Ж')
+                el-row(:gutter="20").not-empty                          
+                    el-col(:span="10")
+                        el-form-item.not-empty
+                          el-date-picker(v-model='ruleForm.dateEntry', type='date', :disabled="true")
+                          .label Дата поступлеия
+
+                    
             .controls
                 router-link(to="/main") Назад
-                el-button.btn-primary.press(@click="submitForm()", :loading="getSickStatus") Добавить
+                .btn-primary.press(@click="submitForm()") Сохранить
+                .btn-primary.btn-success.press(@click="deleteSick(ruleForm)") Выписать
+
 
 </template>
 
@@ -49,120 +61,133 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-    data() {
-        var validateFirstName = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
+  data() {
+    var validateFirstName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Обязательное поле"));
+      } else {
+        if (value !== "" && value.length < 20) {
+          console.log(value);
+          callback();
         } else {
-            if (value !== "" && value.length < 20) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинное Имя"));
-            }
+          callback(new Error("Слишком длинное Имя"));
         }
-        };
-        var validateSecondName = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
+      }
+    };
+    var validateSecondName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Обязательное поле"));
+      } else {
+        if (value !== "" && value.length < 20) {
+          console.log(value);
+          callback();
         } else {
-            if (value !== "" && value.length < 20) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинная Фамилия"));
-            }
+          callback(new Error("Слишком длинная Фамилия"));
         }
-        };
-        var validateThridName = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
+      }
+    };
+    var validateThridName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Обязательное поле"));
+      } else {
+        if (value !== "" && value.length < 20) {
+          console.log(value);
+          callback();
         } else {
-            if (value !== "" && value.length < 20) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинное Отчество"));
-            }
+          callback(new Error("Слишком длинное Отчество"));
         }
-        };
+      }
+    };
+    var validateIndividualNumber = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Обязательное поле"));
+      } else {
+        if (value !== "" && value.length < 20) {
+          console.log(value);
+          callback();
+        } else {
+          callback(new Error("Слишком длинный номер"));
+        }
         
-        var validateMessage = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
+      }
+    };
+    
+    var validateMessage = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Обязательное поле"));
+      } else {
+        callback();
+      }
+    };
+    var validateDate= (rule, value, callback) => {
+      if (value === null) {
+        callback(new Error("Обязательное поле"));
+      } else {
+        console.log(value);
+        callback();
+      }
+    };
+    return {
+      ruleForm: {
+        firstName: "",
+        secondName: "",
+        thridName: "",
+        message: "",
+        gender: true,
+        diagnosis: "",
+        individualNumber: "1242315231",
+        dateBorn: null,
+        dateEntry: null
+        
+      },
+      rules: {
+        firstName: [{ validator: validateFirstName, trigger: "blur" }],
+        secondName: [{ validator: validateSecondName, trigger: "blur" }],
+        thridName: [{ validator: validateThridName, trigger: "blur" }],
+        dateBorn: [{ validator: validateDate, trigger: "blur" }]
+      }
+    };
+  },
+  computed: {
+    ...mapGetters({
+      getSick: "sick/getSick"
+    })
+  },
+  methods: {
+    ...mapActions({
+      setSick: "sick/setSick",
+      deleteSick: "sick/deleteSick",
+      updateSick: "sick/updateSick"
+    }),
+    submitForm() {
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          this.updateSick(this.ruleForm)
         } else {
-            if (value !== "" && value.length < 160) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинный Комментарий"));
-            }
+          return false;
         }
-        };
-        var validateDiagnosis = (rule, value, callback) => {
-        if (value === "") {
-            callback(new Error("Обязательное поле"));
-        } else {
-            if (value !== "" && value.length < 160) {
-            console.log(value);
-            callback();
-            } else {
-            callback(new Error("Слишком длинный Диагноз"));
-            }
-        }
-        };
-        var validateDate= (rule, value, callback) => {
-        if (value === null) {
-            callback(new Error("Обязательное поле"));
-        } else {
-            console.log(value);
-            callback();
-        }
-        };
-        return {
-        dialogFormVisible: true,
-        disabledBtn: false,
-        ruleForm: {
-            firstName: "Спиридонов",
-            secondName: "Максим",
-            thridName: "Владимировч",
-            message: "Радостный",
-            gender: true,
-            diagnosis: "Кажется больным",
-            dateBorn: null,
-        },
-        rules: {
-            firstName: [{ validator: validateFirstName, trigger: "blur" }],
-            secondName: [{ validator: validateSecondName, trigger: "blur" }],
-            thridName: [{ validator: validateThridName, trigger: "blur" }],
-            message: [{ validator: validateMessage, trigger: "blur" }],
-            diagnosis: [{ validator: validateDiagnosis, trigger: "blur" }],
-            dateBorn: [{ validator: validateDate, trigger: "blur" }],
-        }
-        };
-    },
-    computed: {
-        ...mapGetters({
-            getSickStatus: "sick/getSickStatus"
-        })
-    },
-    methods: {
-        ...mapActions({
-            createSick: "sick/createSick",
-            setSickStatus: "sick/setSickStatus"
-        }),
-        submitForm() {
-        this.$refs.ruleForm.validate(valid => {
-            if (valid) {
-                this.setSickStatus(true)
-                this.createSick(this.ruleForm)
-                console.log(this.ruleForm);
-            } else {
-            return false;
-            }
-        });
-        }
+      });
     }
+  },
+  created () {
+    this.$nextTick(() => { 
+      if (this.getSick) {
+        this.ruleForm.firstName = this.getSick.first_name
+        this.ruleForm.secondName = this.getSick.last_name
+        this.ruleForm.thridName = this.getSick.second_name
+        this.ruleForm.dateBorn = this.getSick.birth_date
+        this.ruleForm.gender = this.getSick.gender
+        this.ruleForm.dateEntry = this.getSick.receipt_date
+        this.ruleForm.diagnosis = this.getSick.diagnosis
+        this.ruleForm.message = this.getSick.comments
+      }
+      
+    })
+  },
+  beforeDestroy() {
+    this.setSick(null)
+  }
+
 };
 </script>
 
@@ -193,7 +218,6 @@ $time-description = .25s
         margin-left 50px
         border-radius: 29px;
         padding 50px
-        padding-top 70px
         .controls
             width 100%
             display flex
@@ -243,31 +267,34 @@ $time-description = .25s
                 &:active 
                     transform scale(0.9)
                     transition transform .25s
-        
-.btn-primary {
-    background: #1C3A5F;
-    border-radius: 15px;
-    color: #fff;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    transition: color 0.3s, background 0.3s;
-    font-family 'RobotoRegular'
-    font-style: normal;
-    font-weight: normal;
-    line-height: 28px;
-    font-size: 20px;
-    letter-spacing: -0.75px;
-    width: 300px;
-    height: 70px;
-    &:hover {
-        color: #000;
-        background: #fff;
-        transition: color 0.3s, background 0.3s;
-        cursor: pointer;
-    }
-}
+            .btn-success
+              background: #5DB1B5;
+              
+
+// .btn-success {
+//   background: #5DB1B5;
+//   border-radius: 15px;
+//   color: #fff;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+//   transition: color 0.3s, background 0.3s;
+//   font-family 'RobotoRegular'
+//   font-style: normal;
+//   font-weight: normal;
+//   line-height: 28px;
+//   font-size: 20px;
+//   letter-spacing: -0.75px;
+//   width: 300px;
+//   height: 70px;
+//   &:hover {
+//     color: #000;
+//     background: #fff;
+//     transition: color 0.3s, background 0.3s;
+//     cursor: pointer;
+//   }
+// }
 
 .el-input {
     input {
