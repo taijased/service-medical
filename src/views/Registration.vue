@@ -7,25 +7,25 @@
                     el-col(:span="12")
                         el-form-item(prop="firstName", :class="{'not-empty': ruleForm.firstName !== ''}")
                             el-input(v-model='ruleForm.firstName', autocomplete="off")
-                            .label Имя
+                            .label *Имя
                     el-col(:span="12")
                         el-form-item(prop="secondName", :class="{'not-empty': ruleForm.secondName !== ''}")
                             el-input(v-model='ruleForm.secondName', autocomplete="off")
-                            .label Фамилия
+                            .label *Фамилия
                 el-row(:gutter="20")
                     el-col(:span="12")
-                        el-form-item(prop="thridName", :class="{'not-empty': ruleForm.thridName !== ''}")
+                        el-form-item( :class="{'not-empty': ruleForm.thridName !== ''}")
                             el-input(v-model='ruleForm.thridName', autocomplete="off")
                             .label Отчество
                 el-row(:gutter="20")
                     el-col(:span="12")
                         el-form-item(prop="email", :class="{'not-empty': ruleForm.email !== ''}")
                             el-input(v-model='ruleForm.email', autocomplete="off")
-                            .label E-mail               
+                            .label *E-mail               
                     el-col(:span="12")
                         el-form-item(:class="{'not-empty': ruleForm.password !== ''}")
                             el-input(v-model='ruleForm.password', autocomplete="off", type="password")
-                            .label Пароль              
+                            .label *Пароль              
                
             .controls
                 .btn-primary.btn-success.press(@click="$router.go(-1)") Назад
@@ -64,18 +64,6 @@ export default {
                 }
             }
             };
-        var validateThridName = (rule, value, callback) => {
-            if (value === "") {
-                callback(new Error("Обязательное поле"));
-            } else {
-                if (value !== "" && value.length < 20) {
-                console.log(value);
-                callback();
-                } else {
-                callback(new Error("Слишком длинное Отчество"));
-                }
-            }
-        };
         var validateEmail = (rule, value, callback) => {
             if (value === "") {
                 callback(new Error("Обязательное поле"));
@@ -91,16 +79,15 @@ export default {
         };
         return {
             ruleForm: {
-                firstName: "Максим",
-                secondName: "Спиридонов",
-                thridName: "Владимирович",
-                email: "max@gmail.com",
-                password: "max95"
+                firstName: "",
+                secondName: "",
+                thridName: "",
+                email: "",
+                password: ""
             },
             rules: {
                 firstName: [{ validator: validateFirstName, trigger: "blur" }],
                 secondName: [{ validator: validateSecondName, trigger: "blur" }],
-                thridName: [{ validator: validateThridName, trigger: "blur" }],
                 email: [{ validator: validateEmail, trigger: "blur" }]
             
             }

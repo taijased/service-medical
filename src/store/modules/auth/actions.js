@@ -43,16 +43,16 @@ export async function registration({commit, dispatch}, payload) {
       "second_name": payload.thridName
     }
     await new Promise((resolve, reject) => {
-      AuthService.registrationDoctor('', data)
+      AuthService.registration(data)
         .then(response => {
           console.log(response);
+          Router.push("/")
           resolve(response);
         })
         .catch(error => {
           reject(error)
         });
     })
-    // Router.push('/main')
   } catch (error) {
       console.log('registrationDoctor: ' + error)
   }

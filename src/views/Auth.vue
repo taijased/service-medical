@@ -19,8 +19,8 @@ import { mapActions, mapGetters } from "vuex";
 export default {
     data () {
         return {
-            email: 'floss',
-            password: 'floss'
+            email: '',
+            password: ''
         }
     },
     computed: {

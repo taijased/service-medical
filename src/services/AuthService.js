@@ -23,7 +23,7 @@ const AuthService = {
       window.location.reload();
     }
   },
-  registrationDoctor(data) {
+  registration(data) {
     return ApiAdmin.post('register', data)
   },
   login(data) {
