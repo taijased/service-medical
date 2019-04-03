@@ -87,12 +87,12 @@ export default {
             dialogFormVisible: true,
             disabledBtn: false,
             ruleForm: {
-                firstName: "Спиридонов",
-                secondName: "Максим",
-                thridName: "Владимировч",
-                message: "Радостный",
+                firstName: "",
+                secondName: "",
+                thridName: "",
+                message: "",
                 gender: true,
-                diagnosis: "Кажется больным",
+                diagnosis: "",
                 dateBorn: null,
             },
             rules: {
