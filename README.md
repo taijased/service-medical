@@ -219,7 +219,6 @@ patient_id - id пациента
 }
 ```
 
-
 ### Ссылки на используемые ресурсы
 *[Vue CLI](https://cli.vuejs.org/) 🛠️ Standard Tooling for Vue.js Development
 *[ElementUI](https://element.eleme.io/#/en-US) Element, a Vue 2.0 based component library for developers, designers and product managers
