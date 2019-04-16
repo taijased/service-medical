@@ -37,16 +37,16 @@
                         el-input(v-model='ruleForm.handSpeed', autocomplete="off")
                         .label Сила давления пальцев
                 el-col(:span="8")
-                    el-form-item(prop="handCorner", :class="{'not-empty': ruleForm.handCorner !== ''}")
-                        el-input(v-model='ruleForm.handCorner', autocomplete="off")
+                    el-form-item(prop="fingersCorner", :class="{'not-empty': ruleForm.fingersCorner !== ''}")
+                        el-input(v-model='ruleForm.fingersCorner', autocomplete="off")
                         .label Угол
                 el-col(:span="8")
-                    el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.handSpeed !== ''}")
-                        el-input(v-model='ruleForm.handSpeed', autocomplete="off")
+                    el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.fingersSpeed !== ''}")
+                        el-input(v-model='ruleForm.fingersSpeed', autocomplete="off")
                         .label Скорость
                 el-col(:span="8")
-                    el-form-item(prop="handCount", :class="{'not-empty': ruleForm.handCount !== ''}")
-                        el-input(v-model='ruleForm.handCount', autocomplete="off")
+                    el-form-item(prop="handCount", :class="{'not-empty': ruleForm.fingersCount !== ''}")
+                        el-input(v-model='ruleForm.fingersCount', autocomplete="off")
                         .label Кол-во повторений
            
         .controls
@@ -81,7 +81,10 @@ export default {
                 handCorner: null,
                 handSpeed: null,
                 handCount: null,
-                modeFingers: null
+                modeFingers: null,
+                fingersCorner: null,
+                fingersCount: null,
+                fingersSpeed: null
             },
             rules: {
                 modeHand: [{ validator: validateSelect, trigger: "blur" }],
@@ -89,6 +92,9 @@ export default {
                 handSpeed: [{ validator: validateHand, trigger: "blur" }],
                 handCount: [{ validator: validateHand, trigger: "blur" }],
                 modeFingers: [{ validator: validateSelect, trigger: "blur" }],
+                fingersCorner: [{ validator: validateHand, trigger: "blur" }],
+                fingersSpeed: [{ validator: validateHand, trigger: "blur" }],
+                fingersCount: [{ validator: validateHand, trigger: "blur" }],
             },
             optionsHand: [
                 {
