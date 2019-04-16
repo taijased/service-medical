@@ -110,8 +110,24 @@ export function createSick ({dispatch}, payload) {
 export function setSickStatus ({commit}, payload) {
   commit('UPDATE_STATUS_ADD_SICK', payload)
 }
+
 export function setSick ({commit}, payload) {
   commit('UPDATE_SICK', payload)
 }
 
 
+
+export function setSteps ({commit}, payload) {
+  commit('UPDATE_STEPS', payload)
+}
+
+
+export function setFIO ({commit}, payload) {
+  console.log(payload);
+  commit('UPDATE_FIO', payload)
+}
+
+export function setDiagnosis ({commit}, payload) {
+  console.log(payload);
+  commit('UPDATE_DIAGNOSIS', payload)
+}

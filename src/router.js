@@ -9,6 +9,10 @@ const Registration = () => import('./views/Registration.vue')
 const AddSick = () => import('./views/AddSick.vue')
 const ShowSick = () => import('./views/ShowSick.vue')
 
+const FIO = () => import('./views/steps/FIO.vue');
+const Diagnosis = () => import('./views/steps/Diagnosis.vue');
+const SimulatorMode = () => import('./views/steps/SimulatorMode.vue');
+
 
 Vue.use(Router)
 
@@ -28,7 +32,21 @@ export default new Router({
     {
       path: '/addSick',
       component: AddSick,
-      beforeEnter: AuthService.requireAuth
+      beforeEnter: AuthService.requireAuth,
+      children: [
+        {
+          path: '/',
+          component: FIO,
+        },
+        {
+          path: '/addSick/diagnosis',
+          component: Diagnosis,
+        },
+        {
+          path: '/addSick/simulatormode',
+          component: SimulatorMode,
+        },
+      ]
     },
     {
       path: '/sick',
