@@ -2,16 +2,53 @@
     .form
         el-form(label-position='left', :model='ruleForm', :rules="rules", status-icon, ref="ruleForm", class="creator-form")
             el-row(:gutter="20")
-                el-col(:span="12")
-                    el-form-item(prop="modeHand", :class="{'not-empty': ruleForm.firstName !== ''}")
-                        el-select(v-model='ruleForm.modeHand', placeholder='Рабочие режимы тренажера кисти')
+                el-col(:span="24")
+                    el-form-item(prop="modeHand", :class="{'not-empty': ruleForm.modeHand !== ''}")
+                        el-select(v-model='ruleForm.modeHand')
                             el-option(v-for='item in optionsHand', :key='item.value', :label='item.label', :value='item.value')
+                        .label Рабочие режимы тренажера кисти  
+            el-row(:gutter="20", v-if="ruleForm.modeHand")
+                el-col(:span="8")
+                    el-form-item(prop="handCorner", :class="{'not-empty': ruleForm.handCorner !== ''}")
+                        el-input(v-model='ruleForm.handCorner', autocomplete="off")
+                        .label Угол
+                el-col(:span="8")
+                    el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.handSpeed !== ''}")
+                        el-input(v-model='ruleForm.handSpeed', autocomplete="off")
+                        .label Скорость
+                el-col(:span="8")
+                    el-form-item(prop="handCount", :class="{'not-empty': ruleForm.handCount !== ''}")
+                        el-input(v-model='ruleForm.handCount', autocomplete="off")
+                        .label Кол-во повторений
+           
             el-row(:gutter="20")
-                el-col(:span="12")
+                el-col(:span="24")
                     el-form-item(prop="modeFingers", :class="{'not-empty': ruleForm.firstName !== ''}")
-                        el-select(v-model='ruleForm.modeFingers', placeholder='Рабочие режимы тренажера пальцев')
+                        el-select(v-model='ruleForm.modeFingers', placeholder='Выберите режим')
                             el-option(v-for='item in optionsFingers', :key='item.value', :label='item.label', :value='item.value')
-
+                        .label Рабочие режимы тренажера пальцев
+            el-row(:gutter="20", v-if="ruleForm.modeFingers")
+                el-col(:span="12")
+                    el-form-item(prop="handCorner", :class="{'not-empty': ruleForm.handCorner !== ''}")
+                        el-input(v-model='ruleForm.handCorner', autocomplete="off")
+                        .label Данные с КГР
+                el-col(:span="12")
+                    el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.handSpeed !== ''}")
+                        el-input(v-model='ruleForm.handSpeed', autocomplete="off")
+                        .label Сила давления пальцев
+                el-col(:span="8")
+                    el-form-item(prop="handCorner", :class="{'not-empty': ruleForm.handCorner !== ''}")
+                        el-input(v-model='ruleForm.handCorner', autocomplete="off")
+                        .label Угол
+                el-col(:span="8")
+                    el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.handSpeed !== ''}")
+                        el-input(v-model='ruleForm.handSpeed', autocomplete="off")
+                        .label Скорость
+                el-col(:span="8")
+                    el-form-item(prop="handCount", :class="{'not-empty': ruleForm.handCount !== ''}")
+                        el-input(v-model='ruleForm.handCount', autocomplete="off")
+                        .label Кол-во повторений
+           
         .controls
             router-link(to="/addSick/diagnosis") Назад
             el-button.btn-primary.press(@click="submitForm()", :loading="getSickStatus") Добавить
@@ -25,20 +62,32 @@ export default {
     data() {
       
         var validateSelect = (rule, value, callback) => {
-            if (value === null || value === "") {
+            if (value === null) {
                 callback(new Error("Выберите режим"));
             } else {
-                console.log(value);
+                callback();
+            }
+        };
+        var validateHand = (rule, value, callback) => {
+            if (value === null) {
+                callback(new Error("Обязательное поле"));
+            } else {
                 callback();
             }
         };
         return {
             ruleForm: {
                 modeHand: null,
+                handCorner: null,
+                handSpeed: null,
+                handCount: null,
                 modeFingers: null
             },
             rules: {
                 modeHand: [{ validator: validateSelect, trigger: "blur" }],
+                handCorner: [{ validator: validateHand, trigger: "blur" }],
+                handSpeed: [{ validator: validateHand, trigger: "blur" }],
+                handCount: [{ validator: validateHand, trigger: "blur" }],
                 modeFingers: [{ validator: validateSelect, trigger: "blur" }],
             },
             optionsHand: [
@@ -347,7 +396,7 @@ $time-description = .25s
 
 
 .el-select
-    width 420px
+    width 100%
 
 
 </style>

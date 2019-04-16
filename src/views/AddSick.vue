@@ -63,8 +63,7 @@ $fade-left-width = 500px
     .el-steps
         margin-bottom 25px
         width 500px
-        background #E6F1F3
-
+        background rgba(0,0,0,0)
 
 .fade-enter {
   -webkit-transform: translateX($fade-left-width);
