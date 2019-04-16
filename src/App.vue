@@ -19,7 +19,7 @@ body
   width 100vw
   height 100vh
   background: #E6F1F3;
-  overflow hidden
+  // overflow hidden
 
 .page-enter-active, .page-leave-active {
   transition: opacity 1s, transform 1s;

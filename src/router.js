@@ -14,6 +14,9 @@ const Diagnosis = () => import('./views/steps/Diagnosis.vue');
 const SimulatorMode = () => import('./views/steps/SimulatorMode.vue');
 
 
+const Charts = () => import('./views/Charts.vue');
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +54,11 @@ export default new Router({
     {
       path: '/sick',
       component: ShowSick,
+      beforeEnter: AuthService.requireAuth
+    },
+    {
+      path: '/charts',
+      component: Charts,
       beforeEnter: AuthService.requireAuth
     },
     {

@@ -47,10 +47,10 @@
                         el-form-item.not-empty
                           el-date-picker(v-model='ruleForm.dateEntry', type='date', :disabled="true")
                           .label Дата поступлеия
-
                     
             .controls
                 .btn-primary.press(@click="submitForm()") Сохранить
+                .btn-charts(@click="$router.push('/charts')") Графики
                 .btn-primary.btn-success.press(@click="deleteSick()") Выписать
 
 
@@ -183,9 +183,9 @@ export default {
       
     })
   },
-  beforeDestroy() {
-    this.setSick(null)
-  }
+  // beforeDestroy() {
+    // this.setSick(null)
+  // }
 
 };
 </script>
@@ -270,30 +270,6 @@ $time-description = .25s
               background: #5DB1B5;
               
 
-// .btn-success {
-//   background: #5DB1B5;
-//   border-radius: 15px;
-//   color: #fff;
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-//   align-items: center;
-//   transition: color 0.3s, background 0.3s;
-//   font-family 'RobotoRegular'
-//   font-style: normal;
-//   font-weight: normal;
-//   line-height: 28px;
-//   font-size: 20px;
-//   letter-spacing: -0.75px;
-//   width: 300px;
-//   height: 70px;
-//   &:hover {
-//     color: #000;
-//     background: #fff;
-//     transition: color 0.3s, background 0.3s;
-//     cursor: pointer;
-//   }
-// }
 
 .el-input {
     input {
@@ -450,4 +426,31 @@ $time-description = .25s
   opacity: 0.7;
 }
 
+
+.btn-charts 
+  width 178px
+  height 40px
+  display flex
+  flex-direction row
+  justify-content center
+  align-items center
+  font-family 'RobotoRegular'
+  font-style normal
+  line-height 21px
+  font-size 16px
+  color white
+  user-select none
+  background: #E47470;
+  border-radius: 15px;
+  opacity 1
+  transform scale(1)
+  transition opacity .2s, transform .25s
+  user-select none
+  &:hover
+    cursor pointer
+    opacity .8
+    transition opacity .2s
+  &:active 
+    transform scale(0.9)
+    transition transform .25s
 </style>
