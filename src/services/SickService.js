@@ -34,6 +34,14 @@ const SickService = {
         }
         return ApiAdmin.delete('/patient/' + id, headers)
     },
+    fetchGraph(id) {
+        const headers = {
+            headers: {
+                auth_token: localStorage.getItem('token')
+            }
+        }
+        return ApiAdmin.get('/patient/' + id, headers)
+    },
 }
   
 export default SickService

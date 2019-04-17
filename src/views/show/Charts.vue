@@ -6,19 +6,11 @@
                 .name {{getSick.first_name + " " + getSick.last_name}}
                 img(v-if="getSick.gender", src="../../assets/male.svg")
                 img(v-else, src="../../assets/female.svg")
-            el-main 
-                h1 Две кисти позитивное
-                #chart
-                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
-                h1 Две кисти негативное
-                #chart
-                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
-                h1 Открытые закрытые руки
-                #chart
-                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
-                h1 В покое
-                #chart
-                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
+            el-main(v-if="getCharts")
+                div(v-for="(item, index) in getCharts", :key="item.name + 'key-' + index")
+                    h1 График: {{index + ' ' + item.name}}
+                    #chart
+                        apexchart(type="area", height="350", :options="getChartsOptions", :series="item.data" )
             
     </div>
             
@@ -33,12 +25,22 @@ export default {
         ...mapGetters({
             getSick: "sick/getSick",
             getChartsOptions: "charts/getChartsOptions",
-            getSeriesNegative: "charts/getSeriesNegative"
+            getSeriesNegative: "charts/getSeriesNegative",
+            getCharts: "charts/getCharts"
         }),
     },
     methods: {
         ...mapActions({
-            signin: "auth/signin"
+            fetchGraph: "charts/fetchGraph"
+        })
+    },
+    created() {
+        this.$nextTick(() => { 
+            if (this.getSick) {
+                this.fetchGraph(this.getSick.id)
+            } else {
+                this.$router.push('/main')
+            }
         })
     }
 }
