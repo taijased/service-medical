@@ -6,8 +6,8 @@ import AuthService from './services/AuthService';
 const Auth = () => import('./views/Auth.vue')
 const Main = () => import('./views/Main.vue')
 const Registration = () => import('./views/Registration.vue')
-const AddSick = () => import('./views/AddSick.vue')
-const ShowSick = () => import('./views/ShowSick.vue')
+const AddSick = () => import('./views/steps/AddSick.vue')
+const ShowSick = () => import('./views/show/ShowSick.vue')
 
 const FIO = () => import('./views/steps/FIO.vue');
 const Diagnosis = () => import('./views/steps/Diagnosis.vue');

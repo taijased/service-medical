@@ -1,6 +1,6 @@
 <template lang="pug">
     .add-sick
-        img(src="../assets/new.svg")
+        img(src="../../assets/new.svg")
         .steps
             el-steps(:space='100', :active='getSteps', simple='', finish-status="success")
                 el-step(title='ФИО', icon='el-icon-edit')

@@ -1,12 +1,13 @@
 <template lang="pug">
     .add-sick
-        img(src="../assets/sick-edit.svg")
+        img(src="../../assets/sick-edit.svg")
         .form
             el-breadcrumb(separator='/')
               el-breadcrumb-item(:to="{ path: '/sick' }") ФИО
               el-breadcrumb-item(:to="{ path: '/sick/diagnosis' }") Диагноз
               el-breadcrumb-item(:to="{ path: '/sick/simulatormode' }") Режимы тренажеров
               el-breadcrumb-item(:to="{ path: '/charts' }") Графики
+              el-breadcrumb-item
             transition(name="fade", mode="out-in", :css="true")
               router-view
 </template>
@@ -39,6 +40,17 @@ $fade-left-width = 500px
     padding 50px
     .el-breadcrumb
       margin-bottom 50px
+      .is-link
+        color #27597A
+        font-family: 'RobotoMedium';
+        font-size 18px
+        transition color $time-description
+        &:hover 
+          color #5DB1B5
+          transition color $time-description
+
+
+
 
 
 .fade-enter {
