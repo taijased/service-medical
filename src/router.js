@@ -14,7 +14,13 @@ const Diagnosis = () => import('./views/steps/Diagnosis.vue');
 const SimulatorMode = () => import('./views/steps/SimulatorMode.vue');
 
 
-const Charts = () => import('./views/Charts.vue');
+
+
+const Charts = () => import('./views/show/Charts.vue');
+
+const Profile = () => import('./views/show/Profile.vue');
+const ProfileDiagnosis = () => import('./views/show/ProfileDiagnosis.vue');
+const ProfileSimulatorMode = () => import('./views/show/ProfileSimulatorMode.vue');
 
 
 Vue.use(Router)
@@ -54,7 +60,21 @@ export default new Router({
     {
       path: '/sick',
       component: ShowSick,
-      beforeEnter: AuthService.requireAuth
+      beforeEnter: AuthService.requireAuth,
+      children: [
+        {
+          path: '/',
+          component: Profile,
+        },
+        {
+          path: '/sick/diagnosis',
+          component: ProfileDiagnosis,
+        },
+        {
+          path: '/sick/simulatormode',
+          component: ProfileSimulatorMode,
+        }
+      ]
     },
     {
       path: '/charts',

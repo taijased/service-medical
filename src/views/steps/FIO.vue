@@ -94,18 +94,15 @@ export default {
             setSteps: "sick/setSteps"
         }),
         nextStep() {
-            // this.$refs.ruleForm.validate(valid => {
-            //     if (valid) {
-            //         this.setFIO(this.ruleForm)
-            //         this.setSteps(1)
-            //         this.$router.push('/addSick/diagnosis')
-            //     } else {
-            //         return false;
-            //     }
-            // });
-            this.setFIO(this.ruleForm)
-            this.setSteps(1)
-            this.$router.push('/addSick/diagnosis')
+            this.$refs.ruleForm.validate(valid => {
+                if (valid) {
+                    this.setFIO(this.ruleForm)
+                    this.setSteps(1)
+                    this.$router.push('/addSick/diagnosis')
+                } else {
+                    return false;
+                }
+            });
         }
     }
 };

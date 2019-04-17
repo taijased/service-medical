@@ -2,10 +2,10 @@
     .charts
         el-container(v-if="getChartsOptions")
             el-header(v-if="getSick")
-                img.press(src="../assets/back.svg", @click="$router.go(-1)")
+                img.press(src="../../assets/back.svg", @click="$router.go(-1)")
                 .name {{getSick.first_name + " " + getSick.last_name}}
-                img(v-if="getSick.gender", src="../assets/male.svg")
-                img(v-else, src="../assets/female.svg")
+                img(v-if="getSick.gender", src="../../assets/male.svg")
+                img(v-else, src="../../assets/female.svg")
             el-main 
                 h1 Две кисти позитивное
                 #chart

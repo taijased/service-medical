@@ -194,6 +194,6 @@ export default {
           text-align left
         .sick-family
           width 100%
-            text-align left
+          text-align left
 </style>
 
