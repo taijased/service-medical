@@ -122,6 +122,22 @@ success - статус запроса
 message - какая-то сопроводительная информация
 
 
+## Графики по id пациента {BASE_URL}/patient/{patient_id}
+
+### GET запрос 
+
+header "auth_token":{token}
+token -  токен, который получил на этапе авторизации
+
+```
+      const headers = {
+          headers: {
+              auth_token: token
+          }
+      }
+      return ApiAdmin.get('/patient/' + id, headers)
+```
+
 ## Создать пациента {BASE_URL}/patient
 ![](assets/new.png)
 
