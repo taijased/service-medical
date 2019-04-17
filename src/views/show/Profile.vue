@@ -112,6 +112,7 @@ export default {
         this.ruleForm.secondName = this.getSick.last_name
         this.ruleForm.thridName = this.getSick.second_name
         this.individualNumber = this.getSick.number
+        console.log(this.getSick);
       } else {
         this.$router.push('/main')
       }

@@ -10,15 +10,15 @@
             el-row(:gutter="20", v-if="ruleForm.modeHand")
                 el-col(:span="8")
                     el-form-item(prop="handCorner", :class="{'not-empty': ruleForm.handCorner !== ''}")
-                        el-input(v-model='ruleForm.handCorner', autocomplete="off")
+                        el-input(v-model='ruleForm.handCorner', autocomplete="off", type="number")
                         .label Угол
                 el-col(:span="8")
                     el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.handSpeed !== ''}")
-                        el-input(v-model='ruleForm.handSpeed', autocomplete="off")
+                        el-input(v-model='ruleForm.handSpeed', autocomplete="off", type="number")
                         .label Скорость
                 el-col(:span="8")
                     el-form-item(prop="handCount", :class="{'not-empty': ruleForm.handCount !== ''}")
-                        el-input(v-model='ruleForm.handCount', autocomplete="off")
+                        el-input(v-model='ruleForm.handCount', autocomplete="off", type="number")
                         .label Кол-во повторений
            
             el-row(:gutter="20")
@@ -30,23 +30,23 @@
             el-row(:gutter="20", v-if="ruleForm.modeFingers")
                 el-col(:span="12")
                     el-form-item(prop="fingersKGR", :class="{'not-empty': ruleForm.fingersKGR !== ''}")
-                        el-input(v-model='ruleForm.fingersKGR', autocomplete="off")
+                        el-input(v-model='ruleForm.fingersKGR', autocomplete="off", type="number")
                         .label Данные с КГР
                 el-col(:span="12")
                     el-form-item(prop="fingersPressure", :class="{'not-empty': ruleForm.fingersPressure !== ''}")
-                        el-input(v-model='ruleForm.fingersPressure', autocomplete="off")
+                        el-input(v-model='ruleForm.fingersPressure', autocomplete="off", type="number")
                         .label Сила давления пальцев
                 el-col(:span="8")
                     el-form-item(prop="fingersCorner", :class="{'not-empty': ruleForm.fingersCorner !== ''}")
-                        el-input(v-model='ruleForm.fingersCorner', autocomplete="off")
+                        el-input(v-model='ruleForm.fingersCorner', autocomplete="off", type="number")
                         .label Угол
                 el-col(:span="8")
                     el-form-item(prop="handSpeed", :class="{'not-empty': ruleForm.fingersSpeed !== ''}")
-                        el-input(v-model='ruleForm.fingersSpeed', autocomplete="off")
+                        el-input(v-model='ruleForm.fingersSpeed', autocomplete="off", type="number")
                         .label Скорость
                 el-col(:span="8")
                     el-form-item(prop="handCount", :class="{'not-empty': ruleForm.fingersCount !== ''}")
-                        el-input(v-model='ruleForm.fingersCount', autocomplete="off")
+                        el-input(v-model='ruleForm.fingersCount', autocomplete="off", type="number")
                         .label Кол-во повторений
            
         .controls

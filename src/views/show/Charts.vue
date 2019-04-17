@@ -11,8 +11,14 @@
                 #chart
                     apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
                 h1 Две кисти негативное
+                #chart
+                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
                 h1 Открытые закрытые руки
+                #chart
+                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
                 h1 В покое
+                #chart
+                    apexchart(type="area", height="350", :options="getChartsOptions", :series="getSeriesNegative" )
             
     </div>
             
@@ -58,7 +64,7 @@ export default {
                 font-family 'RobotoBold'
                 font-style: normal;
                 font-weight: bold;
-                font-size: 72px;
+                font-size: 4.5vw;
                 line-height: normal;
                 color: white;
 .press
