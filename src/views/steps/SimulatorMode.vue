@@ -4,7 +4,7 @@
             el-row(:gutter="20")
                 el-col(:span="24")
                     el-form-item(prop="modeHand", :class="{'not-empty': ruleForm.modeHand !== ''}")
-                        el-select(v-model='ruleForm.modeHand')
+                        el-select(v-model='ruleForm.modeHand', placeholder='Выберите режим')
                             el-option(v-for='item in optionsHand', :key='item.value', :label='item.label', :value='item.value')
                         .label Рабочие режимы тренажера кисти  
             el-row(:gutter="20", v-if="ruleForm.modeHand")
@@ -23,7 +23,7 @@
            
             el-row(:gutter="20")
                 el-col(:span="24")
-                    el-form-item(prop="modeFingers", :class="{'not-empty': ruleForm.firstName !== ''}")
+                    el-form-item(prop="modeFingers", :class="{'not-empty': ruleForm.modeFingers !== ''}")
                         el-select(v-model='ruleForm.modeFingers', placeholder='Выберите режим')
                             el-option(v-for='item in optionsFingers', :key='item.value', :label='item.label', :value='item.value')
                         .label Рабочие режимы тренажера пальцев
@@ -102,29 +102,29 @@ export default {
             },
             optionsHand: [
                 {
-                    value: 'Сгибания кисти (вверх-вниз)',
+                    value: 1,
                     label: 'Сгибания кисти (вверх-вниз)'
                 },
                 {
-                    value: 'Сгибания кисти (вправо-влево)',
+                    value: 2,
                     label: 'Сгибания кисти (вправо-влево)'
                 },
                 {
-                    value: 'Фиксации кисти (метод Мышляева/Вахитова)',
+                    value: 3,
                     label: 'Фиксации кисти (метод Мышляева/Вахитова)'
                 },
             ],
             optionsFingers: [
                 {
-                    value: 'Cгибания пальцев',
+                    value: 4,
                     label: 'Cгибания пальцев'
                 },
                 {
-                    value: 'Cгибания пальцев с использованием датчиков давления(поддавки)',
+                    value: 5,
                     label: 'Cгибания пальцев с использованием датчиков давления(поддавки)'
                 },
                 {
-                    value: 'Тренировки пальцев с использованием датчиков давления',
+                    value: 6,
                     label: 'Тренировки пальцев с использованием датчиков давления'
                 },
             ]

@@ -30,24 +30,6 @@ export function updateSickFIO({state}, payload) {
         "last_name": payload.secondName,
         "first_name": payload.firstName,
         "second_name": payload.thridName,
-        "birth_date": moment(state.sick.birth_date).format('YYYY-MM-DD'),
-        "gender": state.sick.gender,
-        "diagnosis": state.sick.diagnosis,
-        "comments": state.sick.comments,
-        "hand": {
-          "mode": state.sick.hand.mode,
-          "angle": state.sick.hand.angle,
-          "speed": state.sick.hand.speed,
-          "repeat": state.sick.hand.repeat
-        },
-        "finger": {
-          "mode": state.sick.hand.mode,
-          "kgr": state.sick.hand.kgr,
-          "press": state.sick.hand.press,
-          "angle": state.sick.hand.angle,
-          "speed": state.sick.hand.speed,
-          "repeat": state.sick.hand.repeat
-        }
       }
 
       new Promise((resolve, reject) => {
@@ -64,6 +46,7 @@ export function updateSickFIO({state}, payload) {
       })
     }
   } catch (error) {
+    console.log(error);
     console.log('updateSickFIO: ' + error)
   }
 }
@@ -72,27 +55,10 @@ export function updateSickDiagnosis({state}, payload) {
   try {
     if (AuthService.isAuthorize()) {
       const data = {
-        "last_name": state.sick.last_name,
-        "first_name": state.sick.first_name,
-        "second_name": state.sick.second_name,
         "birth_date": moment(payload.dateBorn).format('YYYY-MM-DD'),
         "gender": payload.gender,
         "diagnosis": payload.diagnosis,
         "comments": payload.message,
-        "hand": {
-          "mode": state.sick.hand.mode,
-          "angle": state.sick.hand.angle,
-          "speed": state.sick.hand.speed,
-          "repeat": state.sick.hand.repeat
-        },
-        "finger": {
-          "mode": state.sick.hand.mode,
-          "kgr": state.sick.hand.kgr,
-          "press": state.sick.hand.press,
-          "angle": state.sick.hand.angle,
-          "speed": state.sick.hand.speed,
-          "repeat": state.sick.hand.repeat
-        }
       }
       new Promise((resolve, reject) => {
         SickService.updateSick(state.sick.id, data)
@@ -116,13 +82,6 @@ export function updateSickSimulatorMode({state}, payload) {
   try {
     if (AuthService.isAuthorize()) {
       const data = {
-        "last_name": state.sick.last_name,
-        "first_name": state.sick.first_name,
-        "second_name": state.sick.second_name,
-        "birth_date": moment(state.sick.birth_date).format('YYYY-MM-DD'),
-        "gender": state.sick.gender,
-        "diagnosis": state.sick.diagnosis,
-        "comments": state.sick.comments,
         "hand": {
           "mode": payload.modeHand,
           "angle": payload.handCorner,
@@ -188,39 +147,39 @@ export function createSick ({dispatch, state}, payload) {
         "diagnosis": state.diagnosis.diagnosis,
         "comments": state.diagnosis.message,
         "hand": {
+          "mode": payload.modeHand,
+          "angle": payload.handCorner,
           "speed": payload.handSpeed,
-          "corner": payload.handCorner,
-          "count": payload.handCorner
+          "repeat": payload.handCount
         },
-        "fingers": {
+        "finger": {
+          "mode": payload.modeFingers,
           "kgr": payload.fingersKGR,
-          "pressure": payload.fingersPressure,
+          "press": payload.fingersPressure,
+          "angle": payload.fingersCorner,
           "speed": payload.fingersSpeed,
-          "corner": payload.fingersCorner,
-          "count": payload.fingersCorner
+          "repeat": payload.fingersCount
         }
       }
-
-      console.log(data);
 
       dispatch('setSickStatus', false)
 
 
-      // new Promise((resolve, reject) => {
-      //   SickService.createSick(data)
-      //     .then(response => {
-      //       console.log(response);
-      //       setTimeout(() => {
-      //         dispatch('setSickStatus', false)
-      //         Router.push("/main")
-      //       }, 1000);
-      //       resolve(response)
-      //     })
-      //     .catch(error => {
-      //       Router.push("/main")
-      //       reject(error)
-      //     })
-      // })
+      new Promise((resolve, reject) => {
+        SickService.createSick(data)
+          .then(response => {
+            console.log(response);
+            setTimeout(() => {
+              dispatch('setSickStatus', false)
+              Router.push("/main")
+            }, 1000);
+            resolve(response)
+          })
+          .catch(error => {
+            Router.push("/main")
+            reject(error)
+          })
+      })
     }
   } catch (error) {
     console.log('createSick: ' + error)

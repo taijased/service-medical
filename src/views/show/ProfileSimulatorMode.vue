@@ -59,7 +59,6 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
     data() {
-      
         var validateSelect = (rule, value, callback) => {
             if (value === null) {
                 callback(new Error("Выберите режим"));
@@ -131,7 +130,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            getSickStatus: "sick/getSickStatus"
+            getSick: "sick/getSick"
         })
     },
     methods: {
@@ -148,6 +147,28 @@ export default {
                 }
             });
         }
+    },
+    created() {
+        this.$nextTick(() => { 
+            if (this.getSick) {
+                this.ruleForm.modeHand = this.getSick.hand.mode
+                this.ruleForm.handCorner = this.getSick.hand.angle
+                this.ruleForm.handSpeed = this.getSick.hand.speed
+                this.ruleForm.handCount = this.getSick.hand.repeat
+
+                this.ruleForm.modeFingers = this.getSick.finger.mode
+                this.ruleForm.fingersKGR = this.getSick.finger.kgr
+                this.ruleForm.fingersPressure = this.getSick.finger.press
+                this.ruleForm.fingersCorner = this.getSick.finger.angle
+                this.ruleForm.fingersSpeed = this.getSick.finger.speed
+                this.ruleForm.fingersCount = this.getSick.finger.repeat
+                
+
+                console.log(this.ruleForm);
+            } else {
+                this.$router.push('/main')
+            }
+        })
     }
 };
 </script>
